@@ -2,7 +2,7 @@
 # A script to find the details of the jobs that started in a given time period
 import json
 from datetime import datetime, timedelta
-import pprint
+import subprocess
 
 def get_test_data():
     """ For testing, needs to be moved to unit test"""
@@ -28,7 +28,7 @@ def load_json_data(raw_data):
     return json_data
 
 if __name__ == "__main__":
-    raw_data = subprocess.check_output(["qstat", "-f", "-F", "json"])
+    raw_data = subprocess.check_output(["qstat", "-f", "-F", "json"]).decode("utf-8", errors="ignore")
     json_data = load_json_data(raw_data)
 
     #Get jobs that started an hour ago
