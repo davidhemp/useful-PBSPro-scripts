@@ -22,8 +22,6 @@ def load_json_data(raw_data):
         data.append(line)
     #Convert back to string so it can be loaded as json
     data = "".join(data)
-    with open("test_data/queue_json_mod", "w") as f:
-        f.write(data)
     json_data = json.loads(data, strict=False)
     return json_data
 
