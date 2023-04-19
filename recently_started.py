@@ -4,10 +4,13 @@ import json
 from datetime import datetime, timedelta
 import pprint
 
-def load_json_data(filename):
+def get_test_data():
+    """ For testing, needs to be moved to unit test"""
     # Load as bytes so we can drop charaters that aren't utf-8
     with open("test_data/queue_json", "rb") as f:
         raw_data = f.read().decode("utf-8", errors="ignore")
+
+def load_json_data(raw_data):
     # Drop lines that contain BASH_FUNC
     data = []
     for line in raw_data.splitlines():
@@ -25,9 +28,10 @@ def load_json_data(filename):
     return json_data
 
 if __name__ == "__main__":
-    json_data = load_json_data("test_data/queue_json")
+    raw_data = subprocess.check_output(["qstat", "-f", "-F", "json"])
+    json_data = load_json_data(raw_data)
 
-#Get jobs that started an hour ago
+    #Get jobs that started an hour ago
     now = datetime.now()
     time_delta = timedelta(hours=1)
     for jobid, job in json_data["Jobs"].items():
