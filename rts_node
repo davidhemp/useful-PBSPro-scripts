@@ -1,0 +1,17 @@
+#!/bin/bash
+
+usage () {
+  echo "Usage: Clears offline state and any comments"
+  echo -e "Example: ./rts_node cx3-1-13"
+        echo ""
+  exit 1
+}
+
+
+if [[ ! $1 ]] ; then
+  usage
+fi
+
+
+pbsnodes -C "" ${1}
+pbsnodes -r ${1}
