@@ -26,7 +26,7 @@ def load_json_data(raw_data):
     return json_data
 
 if __name__ == "__main__":
-    raw_data = subprocess.check_output(["qstat", "-f", "-F", "json"]).decode("utf-8", errors="ignore")
+    raw_data = subprocess.check_output(["qstat", "-t", "-f", "-F", "json"]).decode("utf-8", errors="ignore")
     json_data = load_json_data(raw_data)
 
     #Get jobs that started an hour ago
@@ -44,4 +44,4 @@ if __name__ == "__main__":
             stime = datetime.strptime(stime_str, "%a %b %d %H:%M:%S %Y")
             time_diff = now - stime
             if time_diff < time_delta:
-                print(jobid)
+            print(jobid, job["Job_Owner"], job["exec_host"])
