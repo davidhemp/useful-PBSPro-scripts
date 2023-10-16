@@ -1,0 +1,17 @@
+#!/bin/bash
+
+usage (){
+  echo "This script returns the fairshare_factor for a given user"
+  echo -e "\nUsage: $0 username \n"
+  exit 1
+}
+
+if [[ ( $@ == "--help") ||  $@ == "-h" || ! $1 ]] 
+then 
+  usage
+fi 
+
+TARGET_USER=$1
+fairshare_tree_usage=$(pbsfs -g ${TARGET_USER} | grep fairshare_tree_usage | grep -o "0\.[0-9]*")
+fairshare_perc=$(pbsfs -g ${TARGET_USER} | grep Percentage | grep -o "[0-9\.]*")
+awk -vfp=$fairshare_perc -vftu=$fairshare_tree_usage 'BEGIN{print 2^(-ftu/(fp/100))}'
