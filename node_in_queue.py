@@ -5,7 +5,7 @@ import sys
 
 def all_nodes() -> dict:
     """Return a dictionary of all nodes and their state"""
-    nodes = defaultdict(lambda: {"state": "Unknown", "queues": []})
+    nodes = defaultdict(lambda: {"state": "Unknown", "Qlist": []})
     running_subjobs = subprocess.check_output(["pbsnodes", "-aF", "dsv"]).decode().strip().split("\n")
     for line in running_subjobs:
         node, state, Qlist = None, None, ""
@@ -18,7 +18,7 @@ def all_nodes() -> dict:
                 Qlist = element.split("=")[1].strip()
         if node:
             for Q in Qlist.split(","):
-                nodes[node]["queues"].append(Q)
+                nodes[node]["Qlist"].append(Q)
             nodes[node]["state"] = state
         else:
             print("Missing information for node. Skipping")
