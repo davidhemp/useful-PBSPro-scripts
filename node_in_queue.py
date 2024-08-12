@@ -30,12 +30,14 @@ if __name__ == "__main__":
     nodes = all_nodes()
     if len(sys.argv) == 1:
         for node, info in nodes.items():
-            print(f"{node}: {info["state"]} {info["Qlist"]}")
+            queues = ",".join(info["Qlist"])
+            print(f"{node:<10}: {info['state']:<10} {queues:<20}")  
     elif len(sys.argv) == 2:
         target_queue = sys.argv[1]
         for node, info in nodes.items():
             if target_queue in info["Qlist"]:
-                print(f"{node}: {info["state"]} {info["Qlist"]}")  
+                queues = ",".join(info["Qlist"])
+                print(f"{node:<10}: {info['state']:<10} {queues:<20}")  
     elif len(sys.argv) > 2:
         print("Usage: node_in_queue.py [queue]")
         sys.exit(1)
