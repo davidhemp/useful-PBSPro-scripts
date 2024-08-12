@@ -21,7 +21,12 @@ def all_nodes() -> dict:
         if node:
             for Q in Qlist.split(","):
                 nodes[node]["Qlist"].append(Q)
-            nodes[node]["state"] = state
+                if "offline" in state:
+                    nodes[node]["state"] = "offline"
+                elif "down" in state:
+                    nodes[node]["state"] = "down"
+                else:
+                    nodes[node]["state"] = state
             nodes[node]["comment"] = comment
         else:
             print("Missing information for node. Skipping")
