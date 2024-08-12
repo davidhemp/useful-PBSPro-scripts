@@ -8,7 +8,7 @@ def all_nodes() -> dict:
     nodes = defaultdict(lambda: {"state": "Unknown", "Qlist": [], "comment": ""})
     running_subjobs = subprocess.check_output(["pbsnodes", "-aF", "dsv"]).decode().strip().split("\n")
     for line in running_subjobs:
-        node, state, Qlist = None, None, ""
+        node, state, Qlist, comment = None, None, "", ""
         for element in line.split("|"):
             if element.startswith("Name"):
                 node = element.split("=")[1].strip().split(".")[0]
@@ -22,6 +22,7 @@ def all_nodes() -> dict:
             for Q in Qlist.split(","):
                 nodes[node]["Qlist"].append(Q)
             nodes[node]["state"] = state
+            nodes[node]["comment"] = comment
         else:
             print("Missing information for node. Skipping")
             print(line)
