@@ -37,7 +37,7 @@ if __name__ == "__main__":
         for node, info in nodes.items():
             if target_queue in info["Qlist"]:
                 queues = ",".join(info["Qlist"])
-                print(f"{node:<10}: {info['state']:<10} {queues:<20}")  
+                print(f"{node:<12} {info['state']:<10} {queues:<20}")  
     elif len(sys.argv) > 2:
         print("Usage: node_in_queue.py [queue]")
         sys.exit(1)
